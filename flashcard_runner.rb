@@ -17,7 +17,7 @@ def play(round)
   loop do
     puts "This is card number #{card_number} out of #{total_cards}."
     puts "Question: #{round.current_card.question}"
-    answer = gets.chomp.capitalize
+    answer = gets.chomp
     new_turn = round.take_turn(answer)
     puts new_turn.feedback
     break if card_number == total_cards
