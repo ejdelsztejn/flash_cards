@@ -13,7 +13,7 @@ class Turn
   end
 
   def correct?
-    string == card.answer
+    string.downcase == card.answer.downcase
   end
 
   def feedback
