@@ -26,7 +26,51 @@ class RoundTest < Minitest::Test
     assert_equal "What is the capital of Alaska?", @round.current_card.question
   end
 
-  # def test_it_takes_a_turn
-  #
-  # end
+  def test_it_takes_a_turn
+    @round.take_turn("Juneau")
+
+    assert_equal 1, @round.turns.count
+  end
+
+  def test_guess_is_correct
+    new_turn = @round.take_turn("Juneau")
+
+    assert true, new_turn.correct?
+  end
+
+  def test_guess_is_incorrect
+    new_turn = @round.take_turn("Anchorage")
+
+    refute false, new_turn.correct?
+  end
+
+  def test_number_of_correct_turns
+    @round.take_turn("Juneau")
+
+    assert_equal 1, @round.number_correct
+  end
+
+  def test_number_of_correct_turns_by_category
+    @round.take_turn("Juneau")
+    @round.take_turn("Venus")
+
+    assert_equal 1, @round.number_correct_by_category(:Geography)
+  end
+
+  def test_calculates_percent_correct_answers
+    @round.take_turn("Juneau")
+    @round.take_turn("Venus")
+
+    assert_equal 50.0, @round.percent_correct
+  end
+
+  def test_calculates_percent_correct_answers_by_category
+    @round.take_turn("Juneau")
+    @round.take_turn("Venus")
+    @round.take_turn("North north west")
+
+    assert_equal 66.67, @round.percent_correct
+    assert_equal 100.0, @round.percent_correct_by_category(:Geography)
+    assert_equal 50.0, @round.percent_correct_by_category(:STEM)
+  end
 end
